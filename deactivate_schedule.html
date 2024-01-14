@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add the necessary head content here -->
+</head>
+<body>
+    <h1>Deactivate Schedule Page</h1>
+    
+    <label for="dagIdDropdown">Select DagID:</label>
+    <select id="dagIdDropdown">
+        <!-- Populate this dropdown with actual dag IDs using Flask template -->
+        {% for dag_id in dag_ids %}s
+            <option value="{{ dag_id }}">{{ dag_id }}</option>
+        {% endfor %}
+    </select>
+    
+    <button onclick="deactivateSchedule()">Deactivate</button>
+
+    <script>
+        function deactivateSchedule() {
+            var selectedDagId = document.getElementById('dagIdDropdown').value;
+
+            // Use AJAX to make the request to deactivate the schedule
+            $.ajax({
+                type: 'POST',
+                url: '/deactivate_schedule_dag',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'dag_id': selectedDagId }),
+                success: function(data) {
+                    alert('Schedule deactivated successfully!');
+                    // You can redirect or perform other actions after deactivating
+                },
+                error: function(error) {
+                    console.error('Error deactivating schedule:', error);
+                    alert('Error deactivating schedule. Please check the console for details.');
+                }
+            });
+        }
+    </script>
+
+    <!-- Include jQuery (ensure it is loaded before the script above) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</body>
+</html>
